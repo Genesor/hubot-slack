@@ -18,6 +18,7 @@ class SlackBot extends Adapter
       token: process.env.HUBOT_SLACK_TOKEN
       autoReconnect: true
       autoMark: true
+      allow_own: process.env.HUBOT_SLACK_ALLOW_OWN == 'true' ? true : false;
 
     return @robot.logger.error "No services token provided to Hubot" unless options.token
     return @robot.logger.error "v2 services token provided, please follow the upgrade instructions" unless (options.token.substring(0, 5) in ['xoxb-', 'xoxp-'])
@@ -93,7 +94,7 @@ class SlackBot extends Adapter
 
   message: (msg) =>
     # Ignore our own messages
-    return if msg.user == @self.id
+    return if msg.user == @self.id && !@options.allow_own
 
     channel = @client.getChannelGroupOrDMByID msg.channel if msg.channel
 

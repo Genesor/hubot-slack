@@ -1,6 +1,6 @@
 {
-  "name": "hubot-slack",
-  "version": "3.3.0",
+  "name": "hubot-slack-gene",
+  "version": "3.3.1",
   "author": {
     "name": "Tiny Speck",
     "url": "https://www.tinyspeck.com/"
@@ -26,6 +26,9 @@
     {
       "name": "Eric Lindvall",
       "email": "eric@papertrailapp.com"
+    },
+    {
+      "name": "Benjamin De Bernardi"
     }
   ],
   "keywords": [
@@ -34,7 +37,7 @@
     "adapter",
     "slack"
   ],
-  "description": "A Slack adapter for hubot",
+  "description": "A custom Slack adapter for hubot",
   "licenses": [
     {
       "type": "MIT",
@@ -43,7 +46,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/slackhq/hubot-slack.git"
+    "url": "https://github.com/Genesor/hubot-slack.git"
   },
   "bugs": {
     "url": "https://github.com/slackhq/hubot-slack/issues",
