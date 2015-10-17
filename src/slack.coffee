@@ -17,8 +17,10 @@ class SlackBot extends Adapter
     options =
       token: process.env.HUBOT_SLACK_TOKEN
       autoReconnect: true
-      autoMark: true
-      allow_own: process.env.HUBOT_SLACK_ALLOW_OWN == 'true' ? true : false;
+      autoMark: process.env.HUBOT_SLACK_AUTOMARK == 'true' ? true : false
+      allow_own: process.env.HUBOT_SLACK_ALLOW_OWN == 'true' ? true : false
+
+    @robot.logger.info "Client started with #{JSON.stringify options}"
 
     return @robot.logger.error "No services token provided to Hubot" unless options.token
     return @robot.logger.error "v2 services token provided, please follow the upgrade instructions" unless (options.token.substring(0, 5) in ['xoxb-', 'xoxp-'])
@@ -57,9 +59,6 @@ class SlackBot extends Adapter
 
     # store a copy of our own user data
     @self = self
-
-    # Provide our name to Hubot
-    @robot.name = self.name
 
     for id, user of @client.users
       @userChange user
@@ -269,7 +268,7 @@ class SlackBot extends Adapter
 
     msg.text = data.text
 
-    if data.username && data.username != @robot.name
+    if data.username
       msg.as_user = false
       msg.username = data.username
       if data.icon_url?
@@ -277,7 +276,8 @@ class SlackBot extends Adapter
       else if data.icon_emoji?
         msg.icon_emoji = data.icon_emoji
     else
-      msg.as_user = true
+      msg.username = @robot.name
+      msg.as_user = false
 
     channel.postMessage msg
 
